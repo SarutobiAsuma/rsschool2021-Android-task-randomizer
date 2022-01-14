@@ -1,17 +1,26 @@
 package com.rsschool.android2021
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 
 class FirstFragment : Fragment() {
 
+    private var listener: ButtonClickFirst? = null
+
     private var generateButton: Button? = null
     private var previousResult: TextView? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        listener = context as ButtonClickFirst
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,11 +38,13 @@ class FirstFragment : Fragment() {
         val result = arguments?.getInt(PREVIOUS_RESULT_KEY)
         previousResult?.text = "Previous result: ${result.toString()}"
 
-        // TODO: val min = ...
-        // TODO: val max = ...
+        val editMin: EditText = view.findViewById(R.id.min_value)
+        val min: Int = editMin.text.toString().toInt()
+        val editMax: EditText = view.findViewById(R.id.max_value)
+        val max = editMax.text.toString().toInt()
 
         generateButton?.setOnClickListener {
-            // TODO: send min and max to the SecondFragment
+            listener?.onButtonClickFirst(min, max)
         }
     }
 
@@ -49,5 +60,9 @@ class FirstFragment : Fragment() {
         }
 
         private const val PREVIOUS_RESULT_KEY = "PREVIOUS_RESULT"
+    }
+
+    interface ButtonClickFirst{
+        fun onButtonClickFirst(min: Int, max: Int)
     }
 }
