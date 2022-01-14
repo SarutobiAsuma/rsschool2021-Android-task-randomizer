@@ -38,12 +38,13 @@ class FirstFragment : Fragment() {
         val result = arguments?.getInt(PREVIOUS_RESULT_KEY)
         previousResult?.text = "Previous result: ${result.toString()}"
 
-        val editMin: EditText = view.findViewById(R.id.min_value)
-        val min: Int = editMin.text.toString().toInt()
-        val editMax: EditText = view.findViewById(R.id.max_value)
-        val max = editMax.text.toString().toInt()
+
 
         generateButton?.setOnClickListener {
+            val editMin: EditText = view.findViewById(R.id.min_value)
+            val min: Int = editMin.text.toString().toInt()
+            val editMax: EditText = view.findViewById(R.id.max_value)
+            val max = editMax.text.toString().toInt()
             listener?.onButtonClickFirst(min, max)
         }
     }
